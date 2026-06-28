@@ -1,0 +1,141 @@
+/* 背景 */
+/* ===== 基礎設定 ===== */
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #f7f5ff, #f3f7ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #444;
+}
+
+/* ===== 主卡片 ===== */
+.card {
+  width: 90%;
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 25px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.8s ease;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* 淡入動畫 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 標題 ===== */
+h1 {
+  text-align: center;
+  color: #555;
+  letter-spacing: 2px;
+}
+
+/* ===== 輸入框 ===== */
+input {
+  width: 100%;
+  padding: 11px;
+  margin: 8px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(200,200,200,0.4);
+  outline: none;
+  background: rgba(255,255,255,0.7);
+  transition: 0.2s;
+  color: #444;
+}
+
+input:focus {
+  border: 1px solid #cfc7ff;
+  box-shadow: 0 0 0 3px rgba(207,199,255,0.25);
+}
+
+/* ===== 成員區塊 ===== */
+.members {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* 成員卡片（未選） */
+.member {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.5);
+  padding: 12px;
+  border-radius: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.25s;
+  user-select: none;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+
+.member:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+
+/* 成員卡片（選中） */
+.member.active {
+  background: #ece9ff;
+  border: 1px solid #d6d0ff;
+  color: #444;
+  box-shadow: 0 8px 20px rgba(170,160,230,0.25);
+  transform: scale(1.03);
+}
+
+/* ===== 按鈕 ===== */
+button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #dcd6ff, #d7e7ff);
+  color: #444;
+
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.25s;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+/* ===== 結果區 ===== */
+.result {
+  margin-top: 15px;
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ===== 響應式（手機） ===== */
+@media (max-width: 500px) {
+  .members {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card {
+    padding: 18px;
+  }
+}
