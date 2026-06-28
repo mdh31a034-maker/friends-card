@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>友列登記 💎</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#ffd6e7,#d6e4ff,#efe2ff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.card {
+  width:90%;
+  max-width:520px;
+  background:rgba(255,255,255,0.75);
+  padding:25px;
+  border-radius:20px;
+  backdrop-filter: blur(12px);
+}
+
+input, select {
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:10px;
+  border:1px solid #ddd;
+}
+
+.members {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.member {
+  background:white;
+  padding:10px;
+  text-align:center;
+  border-radius:12px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.member.active {
+  background:#e8e3ff;
+  transform:scale(1.05);
+}
+
+button {
+  width:100%;
+  margin-top:15px;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#ff9acb,#8ab6ff);
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>💎 友列登記</h1>
+
+<input id="name" placeholder="暱稱">
+<input id="platform" placeholder="IG / Threads">
+<input id="account" placeholder="座標地區">
+
+<h3>生日</h3>
+<div style="display:flex;gap:5px;">
+  <select id="year"></select>
+  <select id="month"></select>
+  <select id="day"></select>
+</div>
+
+<h3>本命（可複選）</h3>
+<div class="members">
+  <div class="member">S.COUPS</div>
+  <div class="member">JEONGHAN</div>
+  <div class="member">JOSHUA</div>
+  <div class="member">JUN</div>
+  <div class="member">HOSHI</div>
+  <div class="member">WONWOO</div>
+  <div class="member">WOOZI</div>
+  <div class="member">DK</div>
+  <div class="member">MINGYU</div>
+  <div class="member">THE8</div>
+  <div class="member">SEUNGKWAN</div>
+  <div class="member">VERNON</div>
+  <div class="member">DINO</div>
+</div>
+
+<button onclick="submitForm()">送出 💌</button>
+
+</div>
+
+<script>
+
+let selected = [];
+
+/* 本命複選 */
+document.querySelectorAll(".member").forEach(el=>{
+  el.onclick = ()=>{
+    el.classList.toggle("active");
+    const name = el.innerText;
+
+    if(selected.includes(name)){
+      selected = selected.filter(x=>x!==name);
+    } else {
+      selected.push(name);
+    }
+  }
+});
+
+/* 生日 */
+const y = document.getElementById("year");
+const m = document.getElementById("month");
+const d = document.getElementById("day");
+
+for(let i=1980;i<=2026;i++) y.innerHTML+=`<option>${i}</option>`;
+for(let i=1;i<=12;i++) m.innerHTML+=`<option>${i}</option>`;
+
+function update(){
+  let days = new Date(y.value,m.value,0).getDate();
+  d.innerHTML="";
+  for(let i=1;i<=days;i++) d.innerHTML+=`<option>${i}</option>`;
+}
+
+y.value=2000;
+m.value=1;
+y.onchange=update;
+m.onchange=update;
+update();
+
+/* 🚀 送出 Google Sheets */
+function submitForm(){
+
+  fetch("https://script.google.com/macros/s/AKfycbwGT3HH1IPhOR8Tbu-oFt6rv4fSMw7Gs7IbLxtgl5dkNo4vhgfQb2khMINe3FqL5uC1TQ/exec", {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain"
+    },
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      platform: document.getElementById("platform").value,
+      account: document.getElementById("account").value,
+      birthday: `${y.value}-${m.value}-${d.value}`,
+      members: selected.join(", ")
+    })
+  });
+
+  alert("送出成功 💎");
+}
+
+</script>
+
+</body>
+</html>
